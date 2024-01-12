@@ -101,10 +101,6 @@
   font-size: inherit;
 }
 
-.result-hit > * {
-  pointer-events: none
-}
-
 #searchbox {
   margin-bottom: 2rem;
 }
@@ -112,4 +108,8 @@
 #pagination {
   margin: 2rem auto;
   text-align: center;
+}
+
+.result-hit__view{
+  margin-right: 5px;
 }
