@@ -8,22 +8,24 @@ $fileContent = file_get_contents("data/products.json");
 
 $data = json_decode($fileContent, true);
 
+$data = applyDiscount($data);
+
+// Update the price range after discount.
 $priceRanges = array_map(function ($item) {
   return $item['price_range'];
 }, $data);
 
-$data = applyDiscount($priceRanges, $data);
-
 $data = updatePriceRangeIfNeeded($priceRanges, $data);
 
+// Send to Algolia
 sendToAlgolia($data);
 
 echo "Done!";
 
 #########################################
-function applyDiscount(array $priceRanges, mixed $data): array
+function applyDiscount(mixed $data): array
 {
-  $data = array_map(function ($item) use ($priceRanges) {
+  $data = array_map(function ($item) {
     if ($item['categories'][0] === 'Cameras & Camcorders') {
       $item['price'] = round($item['price'] * 0.8, 0, PHP_ROUND_HALF_DOWN);
     }
